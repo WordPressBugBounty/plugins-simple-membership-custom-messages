@@ -1,6 +1,6 @@
 <?php 
 ?>
-<h1><?php echo  BUtils::_('Simple WP Membership Custom Message::Settings') ?></h1>
+<h1><?php _e('Simple WP Membership Custom Message::Settings', 'simple-membership') ?></h1>
  <div class="wrap">
         <?php do_action("swpm-custom-message-tab"); ?>
         <form action="options.php" method="POST">

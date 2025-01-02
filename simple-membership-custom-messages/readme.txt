@@ -1,10 +1,10 @@
 === Simple Membership Custom Messages ===
 Contributors: smp7, wp.insider
 Donate link: https://simple-membership-plugin.com/
-Tags: users, membership, custom, message, protection message, content protection, restrict
+Tags: users, membership, custom, message, protection-message,
 Requires at least: 5.0
-Tested up to: 6.6
-Stable tag: 2.4
+Tested up to: 6.7
+Stable tag: 2.5
 License: GPLv2 or later
 
 Simple Membership Addon to customize various content protection messages.
@@ -33,6 +33,11 @@ None
 None
 
 == Changelog ==
+
+= 2.5 = 
+- Minor translation string output related update.
+- CSS Updated for the settings field help text.
+- Added sanitization to the tab parameter in the settings page.
 
 = 2.4 =
 * New settings added to allow customization of the mini/compact login form output.

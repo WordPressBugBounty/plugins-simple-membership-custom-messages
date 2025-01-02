@@ -14,6 +14,7 @@ class SwpmCustomMessageSettings {
         if (is_admin()) { // for frontend just load settings but dont try to render settings page.
             $tab = filter_input(INPUT_GET, 'tab');
             $tab = empty($tab) ? filter_input(INPUT_POST, 'tab') : $tab;
+            $tab = intval($tab);
             $this->current_tab = empty($tab) ? 1 : $tab;
             add_action('swpm-custom-message-tab', array(&$this, 'draw_tabs'));
             $method = 'tab_' . $this->current_tab;
@@ -26,34 +27,34 @@ class SwpmCustomMessageSettings {
     private function tab_1() {
         register_setting('swpm-custom-message-tab-1', 'swpm-custom-message-settings', array(&$this, 'sanitize_tab_1'));
 
-        add_settings_section('swpm-documentation', BUtils::_('Plugin Documentation'), array(&$this, 'swpm_documentation_callback'), 'swpm-custom-message-settings');
+        add_settings_section('swpm-documentation', __('Plugin Documentation','simple-membership'), array(&$this, 'swpm_documentation_callback'), 'swpm-custom-message-settings');
 
-        add_settings_section('pages-settings', BUtils::_('Custom Message Settings'), array(&$this, 'swpm_cm_general_settings_callback'), 'swpm-custom-message-settings');
+        add_settings_section('pages-settings', __('Custom Message Settings','simple-membership'), array(&$this, 'swpm_cm_general_settings_callback'), 'swpm-custom-message-settings');
 
-        add_settings_field('swpm_restricted_post_msg', BUtils::_('Restricted Post'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_restricted_post_msg',
+        add_settings_field('swpm_restricted_post_msg', __('Restricted Post','simple-membership'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_restricted_post_msg',
             'message' => 'Members who do not have access to this post/page content will see this message.'));
-        add_settings_field('swpm_not_logged_in_post_msg', BUtils::_('Restricted Post (Not Logged-in)'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_not_logged_in_post_msg',
+        add_settings_field('swpm_not_logged_in_post_msg', __('Restricted Post (Not Logged-in)','simple-membership'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_not_logged_in_post_msg',
             'message' => 'Non logged in users will see this message on your protected posts/pages. If you customize this message then the "Enable Redirection to the Last Page" feature of the after login redirection addon won\'t work.'));
-        add_settings_field('swpm_restricted_comment_msg', BUtils::_('Restricted Comment'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_restricted_comment_msg',
+        add_settings_field('swpm_restricted_comment_msg', __('Restricted Comment','simple-membership'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_restricted_comment_msg',
             'message' => 'Members who do not have access to protected comments will see this message.'));
-        add_settings_field('swpm_not_logged_in_comment_msg', BUtils::_('Restricted Comment (Not Logged-in)'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_not_logged_in_comment_msg',
+        add_settings_field('swpm_not_logged_in_comment_msg', __('Restricted Comment (Not Logged-in)', 'simple-membership'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_not_logged_in_comment_msg',
             'message' => 'Non logged in users will see this message on protected comments.'));
-        add_settings_field('swpm_restricted_more_tag_msg', BUtils::_('Restricted More Tag'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_restricted_more_tag_msg',
+        add_settings_field('swpm_restricted_more_tag_msg', __('Restricted More Tag','simple-membership'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_restricted_more_tag_msg',
             'message' => 'This message is shown on more tag protected posts (to members who do not have access to the post).'));
-        add_settings_field('swpm_not_logged_in_more_tag_msg', BUtils::_('Restricted More Tag (Not Logged-in)'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_not_logged_in_more_tag_msg',
+        add_settings_field('swpm_not_logged_in_more_tag_msg', __('Restricted More Tag (Not Logged-in)','simple-membership'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_not_logged_in_more_tag_msg',
             'message' => 'Non logged in users will see this message on more tag protected posts.'));
 
-        add_settings_field('swpm_registration_success_msg', BUtils::_('Registration Successful'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_registration_success_msg',
+        add_settings_field('swpm_registration_success_msg', __('Registration Successful','simple-membership'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_registration_success_msg',
             'message' => 'This message gets displayed to the users after they submit the registration form.'));
-        add_settings_field('swpm_registration_email_activation_msg', BUtils::_('Email Activation'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_registration_email_activation_msg',
+        add_settings_field('swpm_registration_email_activation_msg', __('Email Activation','simple-membership'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_registration_email_activation_msg',
             'message' => 'This message gets displayed to the users after they submit the registration form with the email activation feature enabled.'));
 
-        add_settings_field('swpm_account_expired_msg', BUtils::_('Account Expired'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_account_expired_msg',
+        add_settings_field('swpm_account_expired_msg', __('Account Expired','simple-membership'), array(&$this, 'textfield_long_callback'), 'swpm-custom-message-settings', 'pages-settings', array('item' => 'swpm_account_expired_msg',
             'message' => 'This message gets shown to members with expired accounts.'));
 
 	    add_settings_field(
                 'swpm_password_reset_success_msg',
-                BUtils::_('Password Reset Success'),
+                __('Password Reset Success','simple-membership'),
                 array(&$this, 'textfield_long_callback'),
                 'swpm-custom-message-settings',
                 'pages-settings',
@@ -64,7 +65,7 @@ class SwpmCustomMessageSettings {
 
 	    add_settings_field(
 		    'swpm_ty_page_registration_msg_with_link',
-		    BUtils::_('Thank You Page Registration Message with Link'),
+		    __('Thank You Page Registration Message with Link', 'simple-membership'),
 		    array(&$this, 'textfield_long_callback'),
 		    'swpm-custom-message-settings',
 		    'pages-settings',
@@ -75,7 +76,7 @@ class SwpmCustomMessageSettings {
 
 	    add_settings_field(
 		    'swpm_ty_page_registration_msg_no_link',
-		    BUtils::_('Thank You Page Registration Message without Link'),
+		    __('Thank You Page Registration Message without Link', 'simple-membership'),
 		    array(&$this, 'textfield_long_callback'),
 		    'swpm-custom-message-settings',
 		    'pages-settings',
@@ -106,22 +107,22 @@ class SwpmCustomMessageSettings {
 			    'message' => 'This message will appear on the <a href="https://simple-membership-plugin.com/adding-mini-login-widget-sidebar-header-footer/" target="_blank">mini/compact login widget</a> when the user is not logged-in.'
 		    ));
 
-	if ( defined( 'SWPM_FPP_PROTECTION_VER' ) ) {
-	    //Full Page Protection addon is enabled. Let's check if its version is >=1.2
-	    $msg = '';
-	    if ( version_compare( SWPM_FPP_PROTECTION_VER, '1.2', '<' ) ) {
-		$msg = sprintf( '<br><span style="color:red;">Attention: Full Page Protection version 1.2+ required for this to work. You have version %s installed. Please update.</span>', SWPM_FPP_PROTECTION_VER );
-	    }
-	    add_settings_field( 'swpm_fpp_protected_msg', BUtils::_( 'Full Page Protection Message' ), array( &$this, 'textfield_long_callback' ), 'swpm-custom-message-settings', 'pages-settings', array( 'item' => 'swpm_fpp_protected_msg',
-		'message'	 => 'This message gets shown by Full Page Protection addon.'.$msg ) );
-	}
+        if ( defined( 'SWPM_FPP_PROTECTION_VER' ) ) {
+            //Full Page Protection addon is enabled. Let's check if its version is >=1.2
+            $msg = '';
+            if ( version_compare( SWPM_FPP_PROTECTION_VER, '1.2', '<' ) ) {
+            $msg = sprintf( '<br><span style="color:red;">Attention: Full Page Protection version 1.2+ required for this to work. You have version %s installed. Please update.</span>', SWPM_FPP_PROTECTION_VER );
+            }
+            add_settings_field( 'swpm_fpp_protected_msg', __( 'Full Page Protection Message', 'simple-membership' ), array( &$this, 'textfield_long_callback' ), 'swpm-custom-message-settings', 'pages-settings', array( 'item' => 'swpm_fpp_protected_msg',
+            'message'	 => 'This message gets shown by Full Page Protection addon.'.$msg ) );
+        }
 
-	if ( defined( 'SWPM_OLDER_POST_VER' ) ) {
-	    //Older posts protection addon is enabled.
-	    $msg = '';
-	    add_settings_field( 'swpm_older_post_protected_msg', BUtils::_( 'Older Post Protection Message' ), array( &$this, 'textfield_long_callback' ), 'swpm-custom-message-settings', 'pages-settings', array( 'item' => 'swpm_older_post_protected_msg',
-		'message' => 'This message will be shown to protected older posts. You can use the {post_published_date} tag in this message to output the post published date value in the message.') );
-	}
+        if ( defined( 'SWPM_OLDER_POST_VER' ) ) {
+            //Older posts protection addon is enabled.
+            $msg = '';
+            add_settings_field( 'swpm_older_post_protected_msg', __( 'Older Post Protection Message', 'simple-membership' ), array( &$this, 'textfield_long_callback' ), 'swpm-custom-message-settings', 'pages-settings', array( 'item' => 'swpm_older_post_protected_msg',
+            'message' => 'This message will be shown to protected older posts. You can use the {post_published_date} tag in this message to output the post published date value in the message.') );
+        }
 
     }
 
@@ -135,7 +136,7 @@ class SwpmCustomMessageSettings {
         $msg = isset($args['message']) ? $args['message'] : '';
         $is = esc_attr($this->get_value($item));
         echo "<input type='checkbox' $is name='swpm-custom-message-settings[" . $item . "]' value=\"checked='checked'\" />";
-        echo '<br/><i>' . $msg . '</i>';
+        echo '<p class="description">' . $msg . '</p>';
     }
 
     public function textarea_callback($args) {
@@ -143,7 +144,7 @@ class SwpmCustomMessageSettings {
         $msg = isset($args['message']) ? $args['message'] : '';
         $text = esc_attr($this->get_value($item));
         echo "<textarea name='swpm-custom-message-settings[" . $item . "]'  rows='6' cols='60' >" . $text . "</textarea>";
-        echo '<br/><i>' . $msg . '</i>';
+        echo '<p class="description">' . $msg . '</p>';
     }
 
     public function textfield_small_callback($args) {
@@ -151,7 +152,7 @@ class SwpmCustomMessageSettings {
         $msg = isset($args['message']) ? $args['message'] : '';
         $text = esc_attr($this->get_value($item));
         echo "<input type='text' name='swpm-custom-message-settings[" . $item . "]'  size='5' value='" . $text . "' />";
-        echo '<br/><i>' . $msg . '</i>';
+        echo '<p class="description">' . $msg . '</p>';
     }
 
     public function textfield_callback($args) {
@@ -159,7 +160,7 @@ class SwpmCustomMessageSettings {
         $msg = isset($args['message']) ? $args['message'] : '';
         $text = esc_attr($this->get_value($item));
         echo "<input type='text' name='swpm-custom-message-settings[" . $item . "]'  size='50' value='" . $text . "' />";
-        echo '<br/><i>' . $msg . '</i>';
+        echo '<p class="description">' . $msg . '</p>';
     }
 
     public function textfield_long_callback($args) {
@@ -167,7 +168,7 @@ class SwpmCustomMessageSettings {
         $msg = isset($args['message']) ? $args['message'] : '';
         $text = esc_attr($this->get_value($item));
         echo "<input type='text' name='swpm-custom-message-settings[" . $item . "]'  size='100' value='" . $text . "' />";
-        echo '<br/><i>' . $msg . '</i>';
+        echo '<p class="description">' . $msg . '</p>';
     }
 
     public function swpm_documentation_callback() {
