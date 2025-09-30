@@ -35,6 +35,11 @@ class SwpmCustomMessage {
 		add_filter('swpm_mini_login_output_when_logged_in',array(&$this,'swpm_mini_login_output_when_logged_in'));
 		add_filter('swpm_mini_login_output_when_not_logged_in',array(&$this,'swpm_mini_login_output_when_not_logged_in'));
 
+        // Partial Protection Addon
+        add_filter('swpm_pp_output_when_not_logged_in', array(&$this, 'swpm_pp_output_when_not_logged_in'));
+        add_filter('swpm_pp_output_when_no_access', array(&$this, 'swpm_pp_output_when_no_access'));
+        add_filter('swpm_pp_output_when_membership_level_restricted', array(&$this, 'swpm_pp_output_when_membership_level_restricted'));
+        add_filter('swpm_pp_output_when_account_status_restricted', array(&$this, 'swpm_pp_output_when_account_status_restricted'));
     }
 
     public function swpm_older_post_protected_content_msg($output) {
@@ -116,6 +121,22 @@ class SwpmCustomMessage {
 	public function swpm_mini_login_output_when_not_logged_in($output){
 		return $this->dispatch_message('swpm_mini_login_output_when_not_logged_in', $output);
 	}
+
+    public function swpm_pp_output_when_not_logged_in($output) {
+        return $this->dispatch_message('swpm_pp_output_when_not_logged_in', $output);
+    }
+
+    public function swpm_pp_output_when_no_access($output) {
+        return $this->dispatch_message('swpm_pp_output_when_no_access', $output);
+    }
+
+    public function swpm_pp_output_when_membership_level_restricted($output) {
+        return $this->dispatch_message('swpm_pp_output_when_membership_level_restricted', $output);
+    }
+
+    public function swpm_pp_output_when_account_status_restricted($output) {
+        return $this->dispatch_message('swpm_pp_output_when_account_status_restricted', $output);
+    }
 
     private function dispatch_message($key, $default) {
         $msg = SwpmCustomMessageSettings::get_instance()->get_value($key);

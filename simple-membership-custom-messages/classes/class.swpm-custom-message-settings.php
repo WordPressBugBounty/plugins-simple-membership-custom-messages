@@ -27,7 +27,7 @@ class SwpmCustomMessageSettings {
     private function tab_1() {
         register_setting('swpm-custom-message-tab-1', 'swpm-custom-message-settings', array(&$this, 'sanitize_tab_1'));
 
-        add_settings_section('swpm-documentation', __('Plugin Documentation','simple-membership'), array(&$this, 'swpm_documentation_callback'), 'swpm-custom-message-settings');
+        add_settings_section('swpm-documentation', __('Plugin fsdafsaDocumentation','simple-membership'), array(&$this, 'swpm_documentation_callback'), 'swpm-custom-message-settings');
 
         add_settings_section('pages-settings', __('Custom Message Settings','simple-membership'), array(&$this, 'swpm_cm_general_settings_callback'), 'swpm-custom-message-settings');
 
@@ -106,6 +106,56 @@ class SwpmCustomMessageSettings {
 			    'item' => 'swpm_mini_login_output_when_not_logged_in',
 			    'message' => 'This message will appear on the <a href="https://simple-membership-plugin.com/adding-mini-login-widget-sidebar-header-footer/" target="_blank">mini/compact login widget</a> when the user is not logged-in.'
 		    ));
+
+        /**
+         * Partial Protection Addon related settings
+         */
+        add_settings_section('partial-protection-settings', __('Partial Protection Addon Related','simple-membership'), array(&$this, 'swpm_partial_protection_settings_callback'), 'swpm-custom-message-settings');
+
+        add_settings_field(
+            'swpm_pp_output_when_not_logged_in',
+            __('Partially Protected - Not Logged In', 'simple-membership'),
+            array(&$this, 'textfield_long_callback'),
+            'swpm-custom-message-settings',
+            'partial-protection-settings',
+            array(
+                'item' => 'swpm_pp_output_when_not_logged_in',
+                'message' => "Shown when a visitor isn't logged in."
+            ));
+
+        add_settings_field(
+            'swpm_pp_output_when_no_access',
+            __('Partially Protected - Member No Access', 'simple-membership'),
+            array(&$this, 'textfield_long_callback'),
+            'swpm-custom-message-settings',
+            'partial-protection-settings',
+            array(
+                'item' => 'swpm_pp_output_when_no_access',
+                'message' => "Shown when a logged-in member doesn't have access at all."
+            ));
+
+        add_settings_field(
+            'swpm_pp_output_when_membership_level_restricted',
+            __('Partially Protected - Membership Level Restricted', 'simple-membership'),
+            array(&$this, 'textfield_long_callback'),
+            'swpm-custom-message-settings',
+            'partial-protection-settings',
+            array(
+                'item' => 'swpm_pp_output_when_membership_level_restricted',
+                'message' => "Shown when their current level doesn't allow access."
+            ));
+
+        add_settings_field(
+            'swpm_pp_output_when_account_status_restricted',
+            __('Partially Protected - Account Status Restricted', 'simple-membership'),
+            array(&$this, 'textfield_long_callback'),
+            'swpm-custom-message-settings',
+            'partial-protection-settings',
+            array(
+                'item' => 'swpm_pp_output_when_account_status_restricted',
+                'message' => "Shown when account status, e.g. inactive/expired, blocks access"
+            ));
+
 
         if ( defined( 'SWPM_FPP_PROTECTION_VER' ) ) {
             //Full Page Protection addon is enabled. Let's check if its version is >=1.2
@@ -186,6 +236,10 @@ class SwpmCustomMessageSettings {
         echo '<p>Core plugin message will only be overwritten if you specify a value in any of the following fields.<p>';
     }
 
+    public function swpm_partial_protection_settings_callback() {
+        echo '<p>Partial Protection Addon message will only be overwritten if you specify a value in any of the following fields.<p>';
+    }
+
     public function sanitize_tab_1($input) {
         if (empty($this->settings)) {
             $this->settings = (array) get_option('swpm-custom-message-settings');
@@ -210,6 +264,14 @@ class SwpmCustomMessageSettings {
 
         $output['swpm_mini_login_output_when_logged_in'] = isset($input['swpm_mini_login_output_when_logged_in']) ? ($input['swpm_mini_login_output_when_logged_in']) : '';
         $output['swpm_mini_login_output_when_not_logged_in'] = isset($input['swpm_mini_login_output_when_not_logged_in']) ? ($input['swpm_mini_login_output_when_not_logged_in']) : '';
+    
+        /**
+         * Partial Protection Addon related settings
+         */
+        $output['swpm_pp_output_when_not_logged_in'] = isset($input['swpm_pp_output_when_not_logged_in']) ? ($input['swpm_pp_output_when_not_logged_in']) : '';
+        $output['swpm_pp_output_when_no_access'] = isset($input['swpm_pp_output_when_no_access']) ? ($input['swpm_pp_output_when_no_access']) : '';
+        $output['swpm_pp_output_when_membership_level_restricted'] = isset($input['swpm_pp_output_when_membership_level_restricted']) ? ($input['swpm_pp_output_when_membership_level_restricted']) : '';
+        $output['swpm_pp_output_when_account_status_restricted'] = isset($input['swpm_pp_output_when_account_status_restricted']) ? ($input['swpm_pp_output_when_account_status_restricted']) : '';
 
         return $output;
     }

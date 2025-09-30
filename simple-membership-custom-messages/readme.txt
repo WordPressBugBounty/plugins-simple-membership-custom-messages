@@ -2,9 +2,9 @@
 Contributors: smp7, wp.insider
 Donate link: https://simple-membership-plugin.com/
 Tags: users, membership, custom, message, protection-message,
-Requires at least: 5.0
+Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 2.5
+Stable tag: 2.6
 License: GPLv2 or later
 
 Simple Membership Addon to customize various content protection messages.
@@ -33,6 +33,9 @@ None
 None
 
 == Changelog ==
+
+= 2.6 =
+- Added new settings to allow customization of some of the partial protection addon's output.
 
 = 2.5 = 
 - Minor translation string output related update.
